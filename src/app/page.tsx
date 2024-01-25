@@ -1,113 +1,351 @@
-import Image from 'next/image'
-
-export default function Home() {
-  return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
+"use client"; //this is a client component
+import { init } from 'next/dist/compiled/webpack/webpack';
+import { join } from 'path/win32';
+import {useState} from 'react'
+function Square({value, onSquareClick}) {
+  
+  return( <button //button style
+    style = {{
+      width: 250,
+      height: 250,
+    }}
+    className="square"
+    onClick={onSquareClick}
+    >
+      {value}
+    </button>);
+  
 }
+function Reset() {
+  return( <button
+    style = {{
+      borderColor:'rgba(0,0,0,0.2)',
+      alignItems:'right',
+      justifyContent:'center',
+      width:100,
+      height:100,
+      backgroundColor:'#fff',
+      borderRadius:100,
+    }}
+    className='Reset'
+    onClick={()=> window.location.reload()}
+    >
+    Reset
+    </button>)
+}
+var possible = {
+  '0,0': 0,
+  '0,1': 0,
+  '0,2': 0,
+  '1,0': 0,
+  '1,1': 0,
+  '1,2': 0,
+  '2,0': 0,
+  '2,1': 0,
+  '2,2': 0
+}
+const MyDict = {
+  0 : [0, 0],
+  1 : [1, 0],
+  2 : [2, 0],
+  3 : [0, 1],
+  4 : [1, 1],
+  5 : [2, 1],
+  6 : [0, 2],
+  7 : [1, 2],
+  8 : [2, 2],
+}
+const InvDict = {
+  '0, 0' : 0,
+  '1, 0' : 1,
+  '2, 0' : 2,
+  '0, 1' : 3,
+  '1, 1' : 4,
+  '2, 1' : 5,
+  '0, 2' : 6,
+  '1, 2' : 7,
+  '2, 2' : 8,
+}
+//var twodArr = Array.from({length: 3}, ()=>Array(3).fill(null));
+var BoardDict = {
+
+  0: { 0: null, 1: null, 2: null }, //inversed columns and rows
+  1: { 0: null, 1: null, 2: null },
+  2: { 0: null, 1: null, 2: null },
+};
+var testDict = {
+
+  0: { 0: 'X', 1: 'X', 2: 'X' }, //inversed columns and rows
+  1: { 0: 'X', 1: 'X', 2: 'X' },
+  2: { 0: 'X', 1: 'X', 2: 'X' },
+};
+function Board({xIsNext, squares, onPlay}) {
+  //Handle click =======================
+  //var oMove = minimax(BoardDict, 0, false, -Infinity, Infinity); //calling minimax before handleclick
+  function handleClick(i) {
+    //console.log(BoardDict[MyDict[i][0]][MyDict[i][1]]); //THIS CHECKS THE VALUE IN BOARDICT
+    //console.log(BoardDict[2][2]);
+    if (squares[i] || calculateWinner(squares)) {
+      return;
+    }
+    const nextSquares = squares.slice();
+    if (xIsNext) {
+      nextSquares[i] = 'X'; 
+      BoardDict[MyDict[i][0]][MyDict[i][1]] = 'X';
+    }
+    else {
+      let arr = copy(BoardDict);
+      // console.log(isFull(testDict));
+      // if(isFull(testDict)) {
+      //   console.log("HERE");
+      // }
+      let [oMovei, oMovej] = runBot(arr);
+      //console.log(oMovei,oMovej);
+      let tuple = [oMovei, oMovej];
+      nextSquares[InvDict[tuple.join(', ')]] = 'O';
+      console.log(InvDict[tuple.join(', ')]); //gives int value for squares
+      BoardDict[oMovei][oMovej] = "O";
+    }
+    onPlay(nextSquares);
+  }
+  //check winner ===========================
+  const winner = calculateWinner(squares);
+  let status;
+  if(winner) {
+    status = "Winner: " + winner;
+  }
+  else {
+    status = "Active Turn: " + (xIsNext ? "X" : "O");
+  }
+  
+  //setting up board and status =================
+  return(
+    <>
+    <div className="Reset">
+      <Reset/>
+    </div>
+    <div style={{ //status style
+      position: 'absolute',
+      fontSize: 50,
+      top: 0,
+      left: 760,
+    }}>
+      <div className="status">{status}</div>
+    </div>
+    <div className="board-row"> 
+      <div style={{ display: "flex" }}>
+        <Square value={squares[0]} onSquareClick={() => handleClick(0)}/>
+        <Square value={squares[1]} onSquareClick={() => handleClick(1)}/>
+        <Square value={squares[2]} onSquareClick={() => handleClick(2)}/>
+        </div>
+    </div>
+    <div className="board-row">
+      <div style={{ display: "flex" }}>
+        <Square value={squares[3]} onSquareClick={() => handleClick(3)}/>
+        <Square value={squares[4]} onSquareClick={() => handleClick(4)}/>
+        <Square value={squares[5]} onSquareClick={() => handleClick(5)}/>
+        </div>
+    </div>
+    <div className="board-row">
+      <div style={{ display: "flex" }}>
+        <Square value={squares[6]} onSquareClick={() => handleClick(6)}/>
+        <Square value={squares[7]} onSquareClick={() => handleClick(7)}/>
+        <Square value={squares[8]} onSquareClick={() => handleClick(8)}/>
+        </div>
+    </div>
+  </>
+  );
+}
+
+export default function Game() {
+  const [xIsNext, setXIsNext] = useState(true);
+  //const [squares, setSquares] = useState(Array(9).fill(null));
+  //const [currentMove, setCurrentMove] = useState(0);
+  const [history, setHistory] = useState([Array(9).fill(null)]);
+  const currentSquares = history[history.length - 1];
+
+  function handlePlay(nextSquares) {
+    setHistory([...history, nextSquares]); //THIS IS  NECCESSARY FOR CLICKING
+    setXIsNext(!xIsNext);
+  }
+
+  return (
+    <div className="game">
+      <div className="game-board">
+        <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay}/>
+      </div>
+    </div>
+  );
+}
+function minimax(test, depth, ceiling, alpha, beta) {
+  let score = 0;
+  let top;
+  //let arr = copy(BoardDict); //im not sure if i should use test or BoardDict
+  let arr = copy(test);
+  if(isWin(arr, 'O') == 'O') {
+    score += 10;
+    //console.log("OWIN");
+  }
+  if(isWin(arr, 'X') == 'X') {
+    score -= 10;
+    //console.log("XWIN");
+  }
+  if (score == 10) {
+    return score;
+  }
+  if (score == -10){
+    return score;
+  }
+  if(isFull(arr)) {
+    score = 0;
+    return score;
+  }
+  if (ceiling) {
+    top = -Infinity;
+      for(let i = 0; i < 3; ++ i) {
+        for(let j = 0; j < 3; ++j) {
+          if(arr[i][j] == null) {
+            arr[i][j] = 'O';
+            top = Math.max(top, minimax(arr, depth+1, false, alpha, beta));
+            arr[i][j] = null;
+            alpha = Math.max(alpha, top);
+            if(beta <= alpha) {
+              break;
+            }
+          }
+        }
+      }
+      return top;
+  }
+  else {
+    top = Infinity;
+    for(let i = 0; i < 3; ++ i) {
+      for(let j = 0; j < 3; ++j) {
+        if(arr[i][j] == null) {
+          arr[i][j] = 'X';
+          top = Math.min(top, minimax(arr, depth+1, true, alpha, beta));
+          arr[i][j] = null;
+          beta = Math.min(beta, top);
+          if(beta <= alpha) {
+            break;
+          }
+        }
+      }
+    }
+    return top;
+  }
+
+
+}
+function calculateWinner(squares) {
+  //if full
+  // for(let i = 0; i < squares.length; i++) {
+  //   if(!squares[i]) {
+  //     break;
+  //   }
+  //   else if(i >= squares.length) {
+  //     return Board();
+  //   }
+  // }
+  const lines = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6]
+  ];
+  for(let i = 0; i < lines.length; i++)
+  {
+    const [a,b,c] = lines[i];
+    if(squares[a] && squares[a] === squares[b] && squares[a] === squares[c])
+    {
+      return squares[a]
+    }
+  }
+  return null;
+}
+function isWin(arr, player) {
+  for(let i = 0; i < 3; ++i) { //check columns
+    if (player === arr[i][0] && player === arr[i][1] && player === arr[i][2]) {
+      return player;
+    }
+  }
+  for(let i = 0; i < 3; ++ i) { //check rows
+    if (player === arr[0][i] && player === arr[1][i] && player === arr[2][i]) {
+      return player;
+    }
+  }
+  //forward diagonal
+  if(player === arr[0][0] && player === arr[1][1] && player === arr[2][2]) {
+    return player;
+  }
+  //backward diagonal
+  if(player === arr[0][2] && player === arr[1][1] && player === arr[2][0]){
+    return player;
+  }
+  return null;
+ }
+function copy(orig) {
+  let deepCopy = [
+    [null, null, null],
+    [null, null, null],
+    [null, null, null]
+  ];
+
+  for(let i = 0; i < 3; ++i) {
+    for(let j = 0; j < 3; ++j) {
+      deepCopy[i][j] = orig[i][j];
+    }
+  }
+
+  return deepCopy;
+ }
+
+function isFull(arr) {
+  for(let i = 0; i < 3; ++i) {
+    for(let j = 0; j < 3; ++j) {
+      if(arr[i][j] == null) {
+        return false;
+      }
+    }
+  }
+  return true;
+ }
+
+function runBot(arr) {
+  let best = -Infinity;
+  let besti=-1;
+  let bestj=-1;
+  // if(arr[0][0] == null) {
+  //   return[0,0];
+  // }
+  // else if(arr[1][1] == null) {
+  //   return[1,1];
+  // }
+  for(let i = 0; i < 3; ++i) {
+    for(let j = 0; j < 3; ++j) {
+      if(arr[i][j] != null) {
+        let tuple = [i,j];
+        possible[tuple.join(',')] = -Infinity;
+      }
+      if(arr[i][j] == null) {
+        arr[i][j] = 'O';
+        let tuple = [i,j];
+        //nextSquares[InvDict[tuple.join(', ')]]
+        possible[tuple.join(',')] = minimax(arr, 0, false, -Infinity, Infinity); //might be true idk
+        arr[i][j] = null;
+        if(possible[tuple.join(',')] > best) {
+          best = possible[tuple.join(',')];
+          besti = i;
+          bestj = j;
+          //console.log(besti, bestj);
+        }
+      }
+    }
+  }
+  console.log(possible);
+  return[besti,bestj];
+ }
