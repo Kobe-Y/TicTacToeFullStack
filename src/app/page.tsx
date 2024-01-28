@@ -1,7 +1,9 @@
 "use client"; //this is a client component
 import { init } from 'next/dist/compiled/webpack/webpack';
 import { join } from 'path/win32';
-import {useState} from 'react'
+import React, {useState} from 'react'
+import { isBoxedPrimitive } from 'util/types';
+var GLOBALBOTVAR = false; //TEMPORARY TO CHECK IF WE SHOULD RUN BOT. TRUE = RUN
 function Square({value, onSquareClick}) {
   
   return( <button //button style
@@ -93,8 +95,17 @@ function Board({xIsNext, squares, onPlay}) {
       nextSquares[i] = 'X'; 
       BoardDict[MyDict[i][0]][MyDict[i][1]] = 'X';
     }
-    else {
-      let arr = copy(BoardDict);
+    if (GLOBALBOTVAR) {
+      botMove(nextSquares);
+    }
+    else if(!xIsNext){
+      nextSquares[i] = 'O'; 
+      BoardDict[MyDict[i][0]][MyDict[i][1]] = 'O';
+    }
+    onPlay(nextSquares);
+  }
+  function botMove(nextSquares) {
+    let arr = copy(BoardDict);
       // console.log(isFull(testDict));
       // if(isFull(testDict)) {
       //   console.log("HERE");
@@ -105,8 +116,6 @@ function Board({xIsNext, squares, onPlay}) {
       nextSquares[InvDict[tuple.join(', ')]] = 'O';
       console.log(InvDict[tuple.join(', ')]); //gives int value for squares
       BoardDict[oMovei][oMovej] = "O";
-    }
-    onPlay(nextSquares);
   }
   //check winner ===========================
   const winner = calculateWinner(squares);
@@ -121,6 +130,9 @@ function Board({xIsNext, squares, onPlay}) {
   //setting up board and status =================
   return(
     <>
+    {/* <div className="Botbutton">
+          <Botbutton />
+        </div> */}
     <div className="Reset">
       <Reset/>
     </div>
@@ -157,7 +169,7 @@ function Board({xIsNext, squares, onPlay}) {
   );
 }
 
-export default function Game() {
+function Game() {
   const [xIsNext, setXIsNext] = useState(true);
   //const [squares, setSquares] = useState(Array(9).fill(null));
   //const [currentMove, setCurrentMove] = useState(0);
@@ -166,11 +178,15 @@ export default function Game() {
 
   function handlePlay(nextSquares) {
     setHistory([...history, nextSquares]); //THIS IS  NECCESSARY FOR CLICKING
-    setXIsNext(!xIsNext);
+    if(!GLOBALBOTVAR) {
+      setXIsNext(!xIsNext);
+    }
   }
-
   return (
-    <div className="game">
+    <div className="game" style={{ 
+      display: 'flex', 
+      justifyContent: 'center',
+      }}>
       <div className="game-board">
         <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay}/>
       </div>
@@ -349,3 +365,41 @@ function runBot(arr) {
   console.log(possible);
   return[besti,bestj];
  }
+
+class TicTacToe extends React.Component {
+  render() {
+    return (
+      <div className="tictactoe">
+        <Game />
+      </div>
+    );
+  }
+}
+
+export default TicTacToe;
+//WIP I WANT THIS BUTTON TO TOGGLE THE BOT. 
+// function Botbutton() {
+//   const [isBot, setIsBot] = useState(true);
+//   let message;
+//   if(isBot) {
+//     message = "on";
+//   }
+//   else {
+//     message = "off";
+//   }
+//   return( <button
+//     style = {{
+//       borderColor:'rgba(0,0,0,0.2)',
+//       alignItems:'right',
+//       justifyContent:'center',
+//       width:200,
+//       height:100,
+//       backgroundColor:'#fff',
+//       borderRadius:100,
+//     }}
+//     className='Botbutton'
+//     onClick={()=> setIsBot(!isBot)}
+//     >
+//     Bot is {message}
+//     </button>)
+// }
