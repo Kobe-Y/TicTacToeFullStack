@@ -3,7 +3,8 @@ import { init } from 'next/dist/compiled/webpack/webpack';
 import { join } from 'path/win32';
 import React, {useState} from 'react'
 import { isBoxedPrimitive } from 'util/types';
-var GLOBALBOTVAR = false; //TEMPORARY TO CHECK IF WE SHOULD RUN BOT. TRUE = RUN
+import {X, Cricle, Robot, Circle} from "@phosphor-icons/react";
+var GLOBALBOTVAR = true; //TEMPORARY TO CHECK IF WE SHOULD RUN BOT. TRUE = RUN
 function Square({value, onSquareClick}) {
   
   return( <button //button style
@@ -14,16 +15,23 @@ function Square({value, onSquareClick}) {
     className="square"
     onClick={onSquareClick}
     >
-      {value}
+      {value === 'X' && <X size={64} weight="bold" />}
+      {value === 'O' && GLOBALBOTVAR ? <Robot size={64} weight="bold" />
+      : value === 'O' && <Circle size={64} weight="bold" /> }
     </button>);
   
 }
 function Reset() {
   return( <button
     style = {{
+      display: 'flex',
       borderColor:'rgba(0,0,0,0.2)',
-      alignItems:'right',
+      alignItems:'center',
       justifyContent:'center',
+      position: 'absolute',
+      right: 200,
+      top: '10%',
+      transform: 'translateY(100%)',
       width:100,
       height:100,
       backgroundColor:'#fff',
@@ -110,11 +118,13 @@ function Board({xIsNext, squares, onPlay}) {
       // if(isFull(testDict)) {
       //   console.log("HERE");
       // }
+      if(isFull(arr)) {
+        return;
+      }
       let [oMovei, oMovej] = runBot(arr);
       //console.log(oMovei,oMovej);
       let tuple = [oMovei, oMovej];
       nextSquares[InvDict[tuple.join(', ')]] = 'O';
-      console.log(InvDict[tuple.join(', ')]); //gives int value for squares
       BoardDict[oMovei][oMovej] = "O";
   }
   //check winner ===========================
@@ -125,19 +135,23 @@ function Board({xIsNext, squares, onPlay}) {
   }
   else {
     status = "Active Turn: " + (xIsNext ? "X" : "O");
+    if(isFull(BoardDict)) {
+      status = "Scratch Game ";
+    }
   }
   
   //setting up board and status =================
   return(
     <>
-    {/* <div className="Botbutton">
+    <div className="Botbutton">
           <Botbutton />
-        </div> */}
+        </div>
     <div className="Reset">
       <Reset/>
     </div>
     <div style={{ //status style
-      position: 'absolute',
+      display: 'flex',
+      //position: 'absolute',
       fontSize: 50,
       top: 0,
       left: 760,
@@ -378,28 +392,33 @@ class TicTacToe extends React.Component {
 
 export default TicTacToe;
 //WIP I WANT THIS BUTTON TO TOGGLE THE BOT. 
-// function Botbutton() {
-//   const [isBot, setIsBot] = useState(true);
-//   let message;
-//   if(isBot) {
-//     message = "on";
-//   }
-//   else {
-//     message = "off";
-//   }
-//   return( <button
-//     style = {{
-//       borderColor:'rgba(0,0,0,0.2)',
-//       alignItems:'right',
-//       justifyContent:'center',
-//       width:200,
-//       height:100,
-//       backgroundColor:'#fff',
-//       borderRadius:100,
-//     }}
-//     className='Botbutton'
-//     onClick={()=> setIsBot(!isBot)}
-//     >
-//     Bot is {message}
-//     </button>)
-// }
+function Botbutton() {
+  const [isBot, setIsBot] = useState(true);
+  GLOBALBOTVAR = isBot;
+  let message;
+  if(isBot) {
+    message = "on";
+  }
+  else {
+    message = "off";
+  }
+  return( <button
+    style = {{
+      borderColor:'rgba(0,0,0,0.2)',
+      alignItems:'right',
+      justifyContent:'center',
+      width:200,
+      height:100,
+      backgroundColor:'#fff',
+      borderRadius:100,
+      position: 'absolute',
+      right: 130,
+      top: '-9%',
+      transform: 'translateY(100%)',
+    }}
+    className='Botbutton'
+    onClick={()=> setIsBot(!isBot)}
+    >
+    Bot is {message}
+    </button>)
+}
