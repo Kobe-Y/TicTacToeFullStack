@@ -1,9 +1,9 @@
 "use client"; //this is a client component
 import React, {useState} from 'react'
 import {X, Robot, Circle} from "@phosphor-icons/react";
-import {useChannelStateContext} from 'stream-chat-react';
+import {useChannelStateContext, useChatContext} from 'stream-chat-react';
 
-var GLOBALBOTVAR = true; //TEMPORARY TO CHECK IF WE SHOULD RUN BOT. TRUE = RUN
+var GLOBALBOTVAR = false; //TEMPORARY TO CHECK IF WE SHOULD RUN BOT. TRUE = RUN
 function Square({value, onSquareClick}) {
   
   return( <button //button style
@@ -97,11 +97,9 @@ function Board({xIsNext, squares, onPlay}) {
   async function handleClick(i) {
     //console.log(BoardDict[MyDict[i][0]][MyDict[i][1]]); //THIS CHECKS THE VALUE IN BOARDICT
     //console.log(BoardDict[2][2]);
-    const { channel } = useChannelStateContext;
-    await channel.sendEvent({
-      type: "game-move",
-      data: {}
-    })
+
+    
+    console.log(i);
 
     if (squares[i] || calculateWinner(squares)) {
       return;
@@ -120,6 +118,43 @@ function Board({xIsNext, squares, onPlay}) {
     }
     onPlay(nextSquares);
   }
+  //THIS IS WHERE MOVES ARE COMMUNICATED ================================
+  const { channel } = useChannelStateContext();
+  const {client} = useChatContext();
+  const chooseReset = async (setHistory) => {
+    await channel.sendEvent({
+      type: "reset",
+      data: {setHistory},
+    })
+    Reset(setHistory);
+  }
+  
+  const chooseSquare = async (i) => {
+    if(BoardDict[MyDict[i][0]][MyDict[i][1]] === null) { //might want to check symbol
+      //set turn
+      await channel.sendEvent({
+        type: "game-move",
+        data: {i}, //as in location and symbol
+      });
+      
+     
+     handleClick(i)
+      xIsNext = !xIsNext;
+    } 
+  }
+  if(!GLOBALBOTVAR) {
+    channel.on((event)=> {
+      if(event.type == "game-move" && event.user.id !== client.userID) {
+        // const currentPlayer = event.data.player === true ? false : true;
+        // xIsNext=event.data.player;
+        handleClick(event.data.i);
+      }
+      if(event.type == "reset") {
+        Reset(event.data.setHistory);
+      }
+    })
+  }
+//======================================================================
   function botMove(nextSquares) {
     let arr = copy(BoardDict);
       // console.log(isFull(testDict));
@@ -151,9 +186,9 @@ function Board({xIsNext, squares, onPlay}) {
   //setting up board and status =================
   return(
     <>
-    <div className="Botbutton">
+    {/* <div className="Botbutton">
           <Botbutton />
-        </div>
+        </div> */}
     {/* <div className="Reset">
       <Reset/>
     </div> */}
@@ -168,23 +203,23 @@ function Board({xIsNext, squares, onPlay}) {
     </div>
     <div className="board-row"> 
       <div style={{ display: "flex" }}>
-        <Square value={squares[0]} onSquareClick={() => handleClick(0)}/>
-        <Square value={squares[1]} onSquareClick={() => handleClick(1)}/>
-        <Square value={squares[2]} onSquareClick={() => handleClick(2)}/>
+        <Square value={squares[0]} onSquareClick={GLOBALBOTVAR ? ()=> handleClick(0) : () => chooseSquare(0)}/>
+        <Square value={squares[1]} onSquareClick={GLOBALBOTVAR ? () => handleClick(1) : () => chooseSquare(1)}/>
+        <Square value={squares[2]} onSquareClick={GLOBALBOTVAR ? () => handleClick(2) : () => chooseSquare(2)}/>
         </div>
     </div>
     <div className="board-row">
       <div style={{ display: "flex" }}>
-        <Square value={squares[3]} onSquareClick={() => handleClick(3)}/>
-        <Square value={squares[4]} onSquareClick={() => handleClick(4)}/>
-        <Square value={squares[5]} onSquareClick={() => handleClick(5)}/>
+        <Square value={squares[3]} onSquareClick={GLOBALBOTVAR ? () => handleClick(3) : () => chooseSquare(3)}/>
+        <Square value={squares[4]} onSquareClick={GLOBALBOTVAR ? () => handleClick(4) : () => chooseSquare(4)}/>
+        <Square value={squares[5]} onSquareClick={GLOBALBOTVAR ? () => handleClick(5) : () => chooseSquare(5)}/>
         </div>
     </div>
     <div className="board-row">
       <div style={{ display: "flex" }}>
-        <Square value={squares[6]} onSquareClick={() => handleClick(6)}/>
-        <Square value={squares[7]} onSquareClick={() => handleClick(7)}/>
-        <Square value={squares[8]} onSquareClick={() => handleClick(8)}/>
+        <Square value={squares[6]} onSquareClick={GLOBALBOTVAR ? () => handleClick(6) : () => chooseSquare(6)}/>
+        <Square value={squares[7]} onSquareClick={GLOBALBOTVAR ? () => handleClick(7) : () => chooseSquare(7)}/>
+        <Square value={squares[8]} onSquareClick={GLOBALBOTVAR ? () => handleClick(8) : () => chooseSquare(8)}/>
         </div>
     </div>
   </>
@@ -192,6 +227,7 @@ function Board({xIsNext, squares, onPlay}) {
 }
 
 export default function Game({enableBot}) {
+  console.log(GLOBALBOTVAR);
   GLOBALBOTVAR = enableBot;
   const [xIsNext, setXIsNext] = useState(true);
   //const [squares, setSquares] = useState(Array(9).fill(null));
@@ -404,33 +440,33 @@ function runBot(arr) {
 
 // export default TicTacToe;
 //WIP I WANT THIS BUTTON TO TOGGLE THE BOT. 
-function Botbutton() {
-  const [isBot, setIsBot] = useState(true);
-  GLOBALBOTVAR = isBot;
-  let message;
-  if(isBot) {
-    message = "on";
-  }
-  else {
-    message = "off";
-  }
-  return( <button
-    style = {{
-      borderColor:'rgba(0,0,0,0.2)',
-      alignItems:'right',
-      justifyContent:'center',
-      width:200,
-      height:100,
-      backgroundColor:'#fff',
-      borderRadius:100,
-      position: 'absolute',
-      right: 130,
-      top: '-9%',
-      transform: 'translateY(100%)',
-    }}
-    className='Botbutton'
-    onClick={()=> setIsBot(!isBot)}
-    >
-    Bot is {message}
-    </button>)
-}
+// function Botbutton() {
+//   const [isBot, setIsBot] = useState(true);
+//   GLOBALBOTVAR = isBot;
+//   let message;
+//   if(isBot) {
+//     message = "on";
+//   }
+//   else {
+//     message = "off";
+//   }
+//   return( <button
+//     style = {{
+//       borderColor:'rgba(0,0,0,0.2)',
+//       alignItems:'right',
+//       justifyContent:'center',
+//       width:200,
+//       height:100,
+//       backgroundColor:'#fff',
+//       borderRadius:100,
+//       position: 'absolute',
+//       right: 130,
+//       top: '-9%',
+//       transform: 'translateY(100%)',
+//     }}
+//     className='Botbutton'
+//     onClick={()=> setIsBot(!isBot)}
+//     >
+//     Bot is {message}
+//     </button>)
+// }
