@@ -1,7 +1,7 @@
 "use client"; //this is a client component
 import React, {useState} from 'react'
 import {X, Robot, Circle} from "@phosphor-icons/react";
-
+import {useChannelStateContext} from 'stream-chat-react';
 
 var GLOBALBOTVAR = true; //TEMPORARY TO CHECK IF WE SHOULD RUN BOT. TRUE = RUN
 function Square({value, onSquareClick}) {
@@ -20,7 +20,7 @@ function Square({value, onSquareClick}) {
     </button>);
   
 }
-function Reset() {
+function Reset({setHistory}) {
   return( <button
     style = {{
       display: 'flex',
@@ -37,7 +37,11 @@ function Reset() {
       borderRadius:100,
     }}
     className='Reset'
-    onClick={()=> window.location.reload()}
+    //onClick={()=> window.location.reload()}
+    onClick={()=>{
+      setHistory([Array(9).fill(null)]);
+      BoardDict = copy(BlankBoard);
+    }}
     >
     Reset
     </button>)
@@ -53,7 +57,7 @@ var possible = {
   '2,1': 0,
   '2,2': 0
 }
-const MyDict = {
+const MyDict = { //maps bot moves
   0 : [0, 0],
   1 : [1, 0],
   2 : [2, 0],
@@ -82,18 +86,23 @@ var BoardDict = {
   1: { 0: null, 1: null, 2: null },
   2: { 0: null, 1: null, 2: null },
 };
-var testDict = {
-
-  0: { 0: 'X', 1: 'X', 2: 'X' }, //inversed columns and rows
-  1: { 0: 'X', 1: 'X', 2: 'X' },
-  2: { 0: 'X', 1: 'X', 2: 'X' },
+const BlankBoard = {
+    0: { 0: null, 1: null, 2: null }, //inversed columns and rows
+    1: { 0: null, 1: null, 2: null },
+    2: { 0: null, 1: null, 2: null },
 };
 function Board({xIsNext, squares, onPlay}) {
   //Handle click =======================
   //var oMove = minimax(BoardDict, 0, false, -Infinity, Infinity); //calling minimax before handleclick
-  function handleClick(i) {
+  async function handleClick(i) {
     //console.log(BoardDict[MyDict[i][0]][MyDict[i][1]]); //THIS CHECKS THE VALUE IN BOARDICT
     //console.log(BoardDict[2][2]);
+    const { channel } = useChannelStateContext;
+    await channel.sendEvent({
+      type: "game-move",
+      data: {}
+    })
+
     if (squares[i] || calculateWinner(squares)) {
       return;
     }
@@ -145,9 +154,9 @@ function Board({xIsNext, squares, onPlay}) {
     <div className="Botbutton">
           <Botbutton />
         </div>
-    <div className="Reset">
+    {/* <div className="Reset">
       <Reset/>
-    </div>
+    </div> */}
     <div style={{ //status style
       display: 'flex',
       //position: 'absolute',
@@ -182,7 +191,8 @@ function Board({xIsNext, squares, onPlay}) {
   );
 }
 
-function Game() {
+export default function Game({enableBot}) {
+  GLOBALBOTVAR = enableBot;
   const [xIsNext, setXIsNext] = useState(true);
   //const [squares, setSquares] = useState(Array(9).fill(null));
   //const [currentMove, setCurrentMove] = useState(0);
@@ -202,6 +212,9 @@ function Game() {
       }}>
       <div className="game-board">
         <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay}/>
+      </div>
+      <div className="Reset">
+        <Reset setHistory = {setHistory}/>
       </div>
     </div>
   );
@@ -379,17 +392,17 @@ function runBot(arr) {
   return[besti,bestj];
  }
 
-class TicTacToe extends React.Component {
-  render() {
-    return (
-      <div className="tictactoe">
-        <Game />
-      </div>
-    );
-  }
-}
+// class TicTacToe extends React.Component {
+//   render() {
+//     return (
+//       <div className="tictactoe">
+//         <Game />
+//       </div>
+//     );
+//   }
+// }
 
-export default TicTacToe;
+// export default TicTacToe;
 //WIP I WANT THIS BUTTON TO TOGGLE THE BOT. 
 function Botbutton() {
   const [isBot, setIsBot] = useState(true);

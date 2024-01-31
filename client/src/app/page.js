@@ -3,10 +3,12 @@
 
 import Login from "../components/Login";
 import SignUp from "../components/SignUp";
+import JoinGame from "../components/JoinGame.js";
 import {StreamChat} from "stream-chat";
 import Cookies from "universal-cookie";
 import { useState } from 'react';
 import TicTacToe from "./game.tsx";
+import {Chat} from "stream-chat-react";
 
 function App() {
     console.log("HERE");
@@ -38,10 +40,10 @@ function App() {
     return (
         <div className="App">
             {isAuth ? (
-                <div>
-            <button onClick={logOut}>Logout</button>
-            <TicTacToe/>
-            </div>
+                <Chat client={client}>
+                    <button onClick={logOut}>Logout</button>
+                    <JoinGame/>
+                </Chat>
             ) : (
                 <div className="signup/login">
                     <SignUp setIsAuth={setIsAuth}/>
