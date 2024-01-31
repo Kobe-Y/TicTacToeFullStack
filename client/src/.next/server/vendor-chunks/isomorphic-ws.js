@@ -11,13 +11,13 @@ exports.id = "vendor-chunks/isomorphic-ws";
 exports.ids = ["vendor-chunks/isomorphic-ws"];
 exports.modules = {
 
-/***/ "(rsc)/../node_modules/isomorphic-ws/node.js":
+/***/ "(ssr)/../node_modules/isomorphic-ws/node.js":
 /*!*********************************************!*\
   !*** ../node_modules/isomorphic-ws/node.js ***!
   \*********************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-eval("\nmodule.exports = __webpack_require__(/*! ws */ \"(rsc)/../node_modules/ws/index.js\");\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiKHJzYykvLi4vbm9kZV9tb2R1bGVzL2lzb21vcnBoaWMtd3Mvbm9kZS5qcyIsIm1hcHBpbmdzIjoiQUFBYTtBQUViQSxtRkFBeUIiLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vLi4vbm9kZV9tb2R1bGVzL2lzb21vcnBoaWMtd3Mvbm9kZS5qcz8wMWEwIl0sInNvdXJjZXNDb250ZW50IjpbIlwidXNlIHN0cmljdFwiO1xuXG5tb2R1bGUuZXhwb3J0cyA9IHJlcXVpcmUoJ3dzJyk7Il0sIm5hbWVzIjpbIm1vZHVsZSIsImV4cG9ydHMiLCJyZXF1aXJlIl0sInNvdXJjZVJvb3QiOiIifQ==\n//# sourceURL=webpack-internal:///(rsc)/../node_modules/isomorphic-ws/node.js\n");
+eval("\nmodule.exports = __webpack_require__(/*! ws */ \"(ssr)/../node_modules/ws/index.js\");\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiKHNzcikvLi4vbm9kZV9tb2R1bGVzL2lzb21vcnBoaWMtd3Mvbm9kZS5qcyIsIm1hcHBpbmdzIjoiQUFBYTtBQUViQSxtRkFBeUIiLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vLi4vbm9kZV9tb2R1bGVzL2lzb21vcnBoaWMtd3Mvbm9kZS5qcz8wMWEwIl0sInNvdXJjZXNDb250ZW50IjpbIlwidXNlIHN0cmljdFwiO1xuXG5tb2R1bGUuZXhwb3J0cyA9IHJlcXVpcmUoJ3dzJyk7Il0sIm5hbWVzIjpbIm1vZHVsZSIsImV4cG9ydHMiLCJyZXF1aXJlIl0sInNvdXJjZVJvb3QiOiIifQ==\n//# sourceURL=webpack-internal:///(ssr)/../node_modules/isomorphic-ws/node.js\n");
 
 /***/ })
 

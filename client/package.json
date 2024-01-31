@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "test": "next /Users/kobe/Desktop/backend/client/src",
+    "test": "next /Users/kobe/Desktop/backend/client/src/work?",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"

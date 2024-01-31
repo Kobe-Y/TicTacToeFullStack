@@ -34,8 +34,7 @@ app.post("/login", async (req, res)=>{
         //console.log(users); //users is always empty. idk why
         if(users.length === 0) return res.json({message: "User not found"});
         const token = serverClient.createToken(users[0].id);
-        const passwordMatch = await bcrypt.compare(password, users[0].hashedPassword); //check that pass is right
-
+        const passwordMatch = await bcrypt.compare(password, users[0].hashedPass); //check that pass is right
         if(passwordMatch) {
             res.json({
                 token, 

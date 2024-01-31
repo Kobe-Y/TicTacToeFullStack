@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Axios from "axios";
 import Cookies from "universal-cookie";
 
-function SignUp() {
+function SignUp({setIsAuth}) {
     const cookies = new Cookies();
     const [user, setUser] = useState(null);
     const signUp = () => {
@@ -13,19 +13,20 @@ function SignUp() {
             cookies.set("username", username);
             cookies.set("hashedPass", hashedPass);
             cookies.set("userId", userId);
+            setIsAuth(true);
         });
     }
     return (
         <div className="signup">
             <label>SignUp</label>
             <input 
-                placeHolder="Username" 
+                placeholder="Username" 
                 onChange={(event)=> {
                     setUser({...user,  username: event.target.value});
                 }}
             />
             <input 
-                placeHolder="Password" 
+                placeholder="Password" 
                 type="password"
                 onChange={(event)=> {
                     setUser({...user, password: event.target.value});
