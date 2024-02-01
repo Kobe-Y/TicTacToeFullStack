@@ -91,15 +91,13 @@ const BlankBoard = {
     1: { 0: null, 1: null, 2: null },
     2: { 0: null, 1: null, 2: null },
 };
+const playTurn = {};
 function Board({xIsNext, squares, onPlay}) {
   //Handle click =======================
   //var oMove = minimax(BoardDict, 0, false, -Infinity, Infinity); //calling minimax before handleclick
   async function handleClick(i) {
     //console.log(BoardDict[MyDict[i][0]][MyDict[i][1]]); //THIS CHECKS THE VALUE IN BOARDICT
     //console.log(BoardDict[2][2]);
-
-    
-    console.log(i);
 
     if (squares[i] || calculateWinner(squares)) {
       return;
@@ -121,6 +119,15 @@ function Board({xIsNext, squares, onPlay}) {
   //THIS IS WHERE MOVES ARE COMMUNICATED ================================
   const { channel } = useChannelStateContext();
   const {client} = useChatContext();
+  // if(Object.keys(playTurn).length == 0) {
+  //   playTurn[client.userID] = xIsNext;
+  //   console.log(xIsNext);
+  // }
+  // else if(Object.keys(playTurn).length == 1 && !playTurn.hasOwnProperty(client.userID)) {
+  //   playTurn[client.userID] = xIsNext;
+  //   console.log(xIsNext);
+  // }
+  
   const chooseReset = async (setHistory) => {
     await channel.sendEvent({
       type: "reset",
@@ -130,7 +137,11 @@ function Board({xIsNext, squares, onPlay}) {
   }
   
   const chooseSquare = async (i) => {
-    if(BoardDict[MyDict[i][0]][MyDict[i][1]] === null) { //might want to check symbol
+    if(!playTurn.hasOwnProperty(client.userID)) {
+      playTurn[client.userID] = xIsNext;
+      console.log(client.userID);
+    }
+    if(BoardDict[MyDict[i][0]][MyDict[i][1]] === null && playTurn[client.userID] == xIsNext) { //might want to check symbol
       //set turn
       await channel.sendEvent({
         type: "game-move",
