@@ -9,8 +9,9 @@ import Cookies from "universal-cookie";
 import { useState } from 'react';
 import TicTacToe from "./game.tsx";
 import {Chat} from "stream-chat-react";
-
+import dotenv from "dotenv";
 function App() {
+    dotenv.config({path: "../.env"});
     console.log("HERE");
     const api_key = "zs4xxgfzmt7p";
     const cookies = new Cookies();

@@ -4,6 +4,8 @@ import cors from "cors";
 import {StreamChat} from "stream-chat";
 import {v4 as uuidv4} from "uuid";
 import bcrypt from "bcrypt";
+import dotenv from "dotenv";
+dotenv.config({path: "../.env"});
 //require('dotenv').config()
 //TODO use environment variables on the api keys
 const app = express();
@@ -11,8 +13,8 @@ app.use(cors());
 
 app.use(cors());
 app.use(express.json());
-const api_key = "zs4xxgfzmt7p";
-const api_secret = "vh8xpq5t5gbmt4jsruefzdymuk2p8n9heghnq4q4esfrt5agn8dqydm7qwa6t9g4";
+const api_key = process.env.REACT_APP_API_KEY;
+const api_secret = process.env.REACT_APP_API_SECRET;
 const serverClient = StreamChat.getInstance(api_key, api_secret); //instance of stream chat
 
 
