@@ -10,10 +10,16 @@ import { useState } from 'react';
 import TicTacToe from "./game.tsx";
 import {Chat} from "stream-chat-react";
 import dotenv from "dotenv";
+// dotenv.config({path: "../.env"});
+// const test = process.env.REACT_APP_API_KEY;
+// const api_key = process.env.REACT_APP_API_KEY;
+
 function App() {
-    dotenv.config({path: "../.env"});
-    console.log("HERE");
     const api_key = "zs4xxgfzmt7p";
+    //console.log(process.env);
+    //const api_key = process.env.REACT_APP_API_KEY;
+    // console.log("API KEY:", api_key);
+    // console.log("TEST:", test);
     const cookies = new Cookies();
     const token = cookies.get("token");
     const client = StreamChat.getInstance(api_key);
