@@ -6,8 +6,8 @@
 .pnp.js
 .yarn/install-state.gz
 .env
-client/.next
-client/src/.next
+client/.next/
+client/src/.next/
 client/node_modules
 server/node_modules
 
