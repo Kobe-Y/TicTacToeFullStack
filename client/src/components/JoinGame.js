@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import { useChatContext, Channel } from "stream-chat-react";
 import GameDriver from "./GameDriver";
-
+import '../app/Chat.css';
 function JoinGame() {
     const [rivalUsername, setRivalUsername] = useState("");
     const {client} = useChatContext();

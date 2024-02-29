@@ -1,6 +1,5 @@
-//import "./globals.css";
 "use client"; //this is a client component
-
+import "./globals.css"
 import Login from "../components/Login";
 import SignUp from "../components/SignUp";
 import JoinGame from "../components/JoinGame.js";
@@ -48,14 +47,22 @@ function App() {
         <div className="App">
             {isAuth ? (
                 <Chat client={client}>
-                    <button onClick={logOut}>Logout</button>
+                    <div className="logOut">
+                        <button onClick={logOut}>Logout</button>
+                    </div>
                     <JoinGame/>
                 </Chat>
             ) : (
-                <div className="signup/login">
-                    <SignUp setIsAuth={setIsAuth}/>
-                    <Login setIsAuth={setIsAuth}/>
-                </div>
+                <div className="flex flex-col items-center justify-center h-screen">
+                    <div className="bg-white p-8 rounded shadow-md">
+                    <div className="mb-4 bg-red-500">
+                        <SignUp setIsAuth={setIsAuth} />
+                    </div>
+                    <div>
+                        <Login setIsAuth={setIsAuth} />
+                    </div>
+                    </div>
+              </div>
             )}   
         </div>
     );

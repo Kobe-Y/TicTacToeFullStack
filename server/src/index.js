@@ -15,7 +15,6 @@ app.use(cors());
 app.use(express.json());
 const api_key = process.env.REACT_APP_API_KEY;
 const api_secret = process.env.REACT_APP_API_SECRET;
-console.log(process.env);
 const serverClient = StreamChat.getInstance(api_key, api_secret); //instance of stream chat
 
 

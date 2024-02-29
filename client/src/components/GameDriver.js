@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import Game from "../app/game";
+import { Wind } from "@phosphor-icons/react";
+import { Window, MessageList, MessageInput } from "stream-chat-react";
+import "../app/Chat.css";
 
 function GameDriver({channel, singlePlayer}) {
     if(!singlePlayer) {
@@ -16,7 +19,17 @@ function GameDriver({channel, singlePlayer}) {
     return (
         <div className="gameContainer">
             <Game enableBot={singlePlayer}/>
-            {/*chat*/}
+            <Window>
+                <MessageList 
+                disableDateSeparator
+                closeReactionSelectorOnClick
+                hideDeletedMessages
+                messageActions={["react"]}/>
+                <MessageInput 
+                noFiles
+                hideSendButton
+                hasImagePicker={false}/>
+            </Window>
             {/*exit game*/}
         </div>
     );
