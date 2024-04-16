@@ -16,6 +16,7 @@ function GameDriver({channel, singlePlayer}) {
             return (<div> Waiting for other player to join...</div>);
         }
     }
+
     return (
         <div className="gameContainer">
             <Game enableBot={singlePlayer}/>

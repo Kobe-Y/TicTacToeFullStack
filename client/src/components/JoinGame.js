@@ -1,6 +1,7 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import { useChatContext, Channel } from "stream-chat-react";
 import GameDriver from "./GameDriver";
+import GameDriverSingle from "./GameDriverSingle";
 import '../app/Chat.css';
 function JoinGame() {
     const [rivalUsername, setRivalUsername] = useState("");
@@ -9,7 +10,10 @@ function JoinGame() {
     const [singlePlayer, setSinglePlayer] = useState(false);
     const createChannel = async () => {
         const response = await client.queryUsers({name: {$eq : rivalUsername}});
-        if(response.users.length==0){alert("User not found")}; //does this need return?
+        if(response.users.length==0){
+            alert("User not found");
+            return;
+        }; //does this need return?
         const newChannel = await client.channel("messaging", {
             members: [client.userID, response.users[0].id],
         });
@@ -18,20 +22,24 @@ function JoinGame() {
     };
     return( 
         <>
-        {channel ? ( //IF CHANNEL IS TRUE
+        {!singlePlayer && channel!==null ? ( //IF CHANNEL IS TRUE
+        <div>
+            {console.log("Multip")}
             <Channel channel = {channel}>
-                <GameDriver channel = {channel}/>
+                <GameDriver singlePlayer = {false} channel = {channel}/>
             </Channel>
+        </div>
         )
         : ( //else if
             singlePlayer ? (
-            <>
-                <GameDriver singlePlayer={singlePlayer}/>
-            </>
+            <div>
+            {console.log("Single")}
+                <GameDriverSingle singlePlayer={singlePlayer}/>
+            </div>
             )
          
          : ( //else
-                <>
+                <div>
                 <div className="joinGame">
                     <h4>Create Game </h4>
                     <input placeholder="Username of rival..." onChange={(event) => {
@@ -41,9 +49,11 @@ function JoinGame() {
                     <button onClick={createChannel}>Join/Start Game</button>
                 </div>
                 <div className="botButton"> 
-                        <button onClick={ ()=> setSinglePlayer(true)}>Play Bot?</button>
+                        <button onClick={()=> { 
+                            setSinglePlayer(true);
+                            }}>Play Bot?</button>
                 </div>
-                </>
+                </div>
                 )
             ) 
         }

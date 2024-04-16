@@ -139,7 +139,7 @@ function Board({xIsNext, squares, onPlay}) {
   const chooseSquare = async (i) => {
     if(!playTurn.hasOwnProperty(client.userID)) {
       playTurn[client.userID] = xIsNext;
-      console.log(client.userID);
+      //console.log(client.userID);
     }
     if(BoardDict[MyDict[i][0]][MyDict[i][1]] === null && playTurn[client.userID] == xIsNext) { //might want to check symbol
       //set turn
@@ -238,7 +238,6 @@ function Board({xIsNext, squares, onPlay}) {
 }
 
 export default function Game({enableBot}) {
-  console.log(GLOBALBOTVAR);
   GLOBALBOTVAR = enableBot;
   const [xIsNext, setXIsNext] = useState(true);
   //const [squares, setSquares] = useState(Array(9).fill(null));
@@ -435,7 +434,6 @@ function runBot(arr) {
       }
     }
   }
-  console.log(possible);
   return[besti,bestj];
  }
 
