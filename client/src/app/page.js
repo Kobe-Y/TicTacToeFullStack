@@ -14,7 +14,7 @@ import dotenv from "dotenv";
 // const api_key = process.env.REACT_APP_API_KEY;
 
 function App() {
-    const api_key = "zs4xxgfzmt7p";
+    const api_key = process.env.REACT_APP_API_KEY;
     //console.log(process.env);
     //const api_key = process.env.REACT_APP_API_KEY;
     // console.log("API KEY:", api_key);
